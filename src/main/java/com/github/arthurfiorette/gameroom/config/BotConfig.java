@@ -3,7 +3,6 @@ package com.github.arthurfiorette.gameroom.config;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
-
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

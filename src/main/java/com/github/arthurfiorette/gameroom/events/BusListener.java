@@ -8,7 +8,5 @@ import com.google.common.eventbus.Subscribe;
  * <b>Mark with {@link Subscribe} to use it </b>
  */
 public interface BusListener {
-
   default void onRoomRequest(RoomRequestEvent event) {}
-
 }

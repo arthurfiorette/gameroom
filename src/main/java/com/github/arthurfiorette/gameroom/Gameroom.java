@@ -28,8 +28,11 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 @RequiredArgsConstructor
 public final class Gameroom {
 
-  private static final GatewayIntent[] INTENTS = { GUILD_MESSAGE_REACTIONS, GUILD_MESSAGES,
-      GUILD_MEMBERS, };
+  private static final GatewayIntent[] INTENTS = {
+    GUILD_MESSAGE_REACTIONS,
+    GUILD_MESSAGES,
+    GUILD_MEMBERS,
+  };
 
   private static final CacheFlag[] CACHE_FLAGS = {};
 
@@ -55,10 +58,12 @@ public final class Gameroom {
   private JDABuilder createJda() {
     final String token = config.get(Property.AUTH_TOKEN);
 
-    return JDABuilder.create(token, Arrays.asList(INTENTS))
-        .setMemberCachePolicy(MemberCachePolicy.ALL).enableCache(Arrays.asList(CACHE_FLAGS))
-        .setStatus(OnlineStatus.ONLINE)
-        .setActivity(new CustomActivity());
+    return JDABuilder
+      .create(token, Arrays.asList(INTENTS))
+      .setMemberCachePolicy(MemberCachePolicy.ALL)
+      .enableCache(Arrays.asList(CACHE_FLAGS))
+      .setStatus(OnlineStatus.ONLINE)
+      .setActivity(new CustomActivity());
   }
 
   public void setup() {

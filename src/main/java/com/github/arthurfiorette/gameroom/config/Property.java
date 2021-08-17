@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum Property {
-
   AUTH_TOKEN("auth.token");
 
   @Getter
