@@ -1,4 +1,4 @@
-package com.github.arthurfiorette.gameroom.config;
+package com.github.arthurfiorette.gameroom.old.config;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

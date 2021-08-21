@@ -1,4 +1,4 @@
-package com.github.arthurfiorette.gameroom.events;
+package com.github.arthurfiorette.gameroom.old.events;
 
 import lombok.Data;
 

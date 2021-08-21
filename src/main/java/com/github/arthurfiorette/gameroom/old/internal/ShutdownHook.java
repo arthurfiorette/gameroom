@@ -1,6 +1,6 @@
-package com.github.arthurfiorette.gameroom.internal;
+package com.github.arthurfiorette.gameroom.old.internal;
 
-import com.github.arthurfiorette.gameroom.Gameroom;
+import com.github.arthurfiorette.gameroom.old.Gameroom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

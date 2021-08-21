@@ -1,16 +1,15 @@
-package com.github.arthurfiorette.gameroom;
+package com.github.arthurfiorette.gameroom.old;
 
 import static net.dv8tion.jda.api.requests.GatewayIntent.GUILD_MEMBERS;
 import static net.dv8tion.jda.api.requests.GatewayIntent.GUILD_MESSAGES;
 import static net.dv8tion.jda.api.requests.GatewayIntent.GUILD_MESSAGE_REACTIONS;
 
-import com.github.arthurfiorette.gameroom.activity.CustomActivity;
-import com.github.arthurfiorette.gameroom.config.BotConfig;
-import com.github.arthurfiorette.gameroom.config.Property;
-import com.github.arthurfiorette.gameroom.internal.ShutdownHook;
-import com.github.arthurfiorette.gameroom.room.RoomCreator;
-import com.google.common.eventbus.AsyncEventBus;
-import com.google.common.eventbus.EventBus;
+import com.github.arthurfiorette.gameroom.old.config.BotConfig;
+import com.github.arthurfiorette.gameroom.old.config.Property;
+import com.github.arthurfiorette.gameroom.old.internal.ShutdownHook;
+import com.github.arthurfiorette.gameroom.old.room.RoomCreator;
+
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import lombok.Getter;
@@ -28,8 +27,13 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 @RequiredArgsConstructor
 public final class Gameroom {
 
-  private static final GatewayIntent[] INTENTS = { GUILD_MESSAGE_REACTIONS, GUILD_MESSAGES,
-      GUILD_MEMBERS, };
+  public static final Color MAIN_COLOR = new Color(0xF1443F);
+
+  private static final GatewayIntent[] INTENTS = {
+    GUILD_MESSAGE_REACTIONS,
+    GUILD_MESSAGES,
+    GUILD_MEMBERS,
+  };
 
   private static final CacheFlag[] CACHE_FLAGS = {};
 
@@ -39,9 +43,6 @@ public final class Gameroom {
 
   @Getter
   private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
-
-  @Getter
-  private final EventBus eventBus = new AsyncEventBus(executor);
 
   @Getter
   private JDA jda;
@@ -55,16 +56,12 @@ public final class Gameroom {
   private JDABuilder createJda() {
     final String token = config.get(Property.AUTH_TOKEN);
 
-    return JDABuilder.create(token, Arrays.asList(INTENTS))
-        .setMemberCachePolicy(MemberCachePolicy.ALL).enableCache(Arrays.asList(CACHE_FLAGS))
-        .setStatus(OnlineStatus.ONLINE)
-        .setActivity(new CustomActivity());
-  }
-
-  public void setup() {
-    final Object[] classes = { new RoomCreator(this) };
-
-    jda.addEventListener(classes);
-    eventBus.register(classes);
+    return JDABuilder
+      .create(token, Arrays.asList(INTENTS))
+      .setMemberCachePolicy(MemberCachePolicy.ALL)
+      .enableCache(Arrays.asList(CACHE_FLAGS))
+      .setStatus(OnlineStatus.ONLINE)
+      .addEventListeners(new RoomCreator(this))
+      .setActivity(Activity.streaming("Tribo gaules", "https://twitch.tv/gaules"));
   }
 }
