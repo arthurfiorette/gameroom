@@ -4,8 +4,8 @@ import static net.dv8tion.jda.api.requests.GatewayIntent.GUILD_MEMBERS;
 import static net.dv8tion.jda.api.requests.GatewayIntent.GUILD_MESSAGES;
 import static net.dv8tion.jda.api.requests.GatewayIntent.GUILD_MESSAGE_REACTIONS;
 
-import com.github.arthurfiorette.gameroom.old.config.BotConfig;
-import com.github.arthurfiorette.gameroom.old.config.Property;
+import com.github.arthurfiorette.gameroom.config.BotConfig;
+import com.github.arthurfiorette.gameroom.config.Property;
 import com.github.arthurfiorette.gameroom.old.internal.ShutdownHook;
 import com.github.arthurfiorette.gameroom.old.room.RoomCreator;
 import java.awt.Color;

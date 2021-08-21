@@ -1,6 +1,6 @@
 package com.github.arthurfiorette.gameroom.old;
 
-import com.github.arthurfiorette.gameroom.old.config.BotConfig;
+import com.github.arthurfiorette.gameroom.config.BotConfig;
 
 public final class Main {
 
