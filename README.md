@@ -1,8 +1,3 @@
-<!-- @format -->
-
-# gameroom
-
-🕹️⚡🎮 Create amazing short term rooms in discord
 <br />
 
 <div align="center">
