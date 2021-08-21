@@ -8,7 +8,6 @@ import com.github.arthurfiorette.gameroom.old.config.BotConfig;
 import com.github.arthurfiorette.gameroom.old.config.Property;
 import com.github.arthurfiorette.gameroom.old.internal.ShutdownHook;
 import com.github.arthurfiorette.gameroom.old.room.RoomCreator;
-
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.concurrent.ScheduledThreadPoolExecutor;

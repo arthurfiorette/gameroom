@@ -1,7 +1,6 @@
 package com.github.arthurfiorette.gameroom.old.room;
 
 import com.github.arthurfiorette.gameroom.old.Gameroom;
-
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ public class RoomCreator extends ListenerAdapter {
   @Getter
   @NonNull
   private final Gameroom gameroom;
-  
+
   @Override
   public void onGuildReady(GuildReadyEvent event) {
     Guild guild = event.getGuild();
@@ -32,8 +31,7 @@ public class RoomCreator extends ListenerAdapter {
     VoiceChannel voice = category.createVoiceChannel("gameroom-" + id).complete();
     category.getManager();
     text.sendMessageEmbeds(RoomEmbed.create()).queue();
-    
+
     return new GameRoom(text, voice);
   }
-
 }

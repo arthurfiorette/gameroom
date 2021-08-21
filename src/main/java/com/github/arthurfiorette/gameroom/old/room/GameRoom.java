@@ -17,8 +17,5 @@ public class GameRoom {
   @NonNull
   private final VoiceChannel voiceChannel;
 
-  public void prepareTextChannel() {
-    
-    
-  }
+  public void prepareTextChannel() {}
 }
