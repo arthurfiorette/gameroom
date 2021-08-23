@@ -1,7 +1,6 @@
 package com.github.arthurfiorette.gameroom.shard;
 
 import java.util.List;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;

@@ -1,12 +1,10 @@
 package com.github.arthurfiorette.gameroom.shard;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import com.github.arthurfiorette.gameroom.Gameroom;
 import com.github.arthurfiorette.gameroom.config.BotConfig;
 import com.github.arthurfiorette.gameroom.config.Property;
-
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +52,7 @@ public class ShardFactory {
     ShardInstance instance = new ShardInstance(id, gameroom);
 
     instance.getShardListeners().forEach(gameroom.getEventBus()::register);
-    
+
     return instance;
   }
 }
