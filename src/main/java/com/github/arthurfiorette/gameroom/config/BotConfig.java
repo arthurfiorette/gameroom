@@ -37,4 +37,16 @@ public class BotConfig {
   public String get(@NonNull Property prop, String def) {
     return this.properties.getProperty(prop.getPath(), def);
   }
+
+  public boolean has(@NonNull Property prop) {
+    return this.properties.contains(prop.getPath());
+  }
+
+  public int getInt(@NonNull Property prop) {
+    return Integer.parseInt(get(prop));
+  }
+
+  public boolean getBoolean(@NonNull Property prop) {
+    return Boolean.parseBoolean(get(prop));
+  }
 }

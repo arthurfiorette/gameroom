@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.RestAction;
 
+@Deprecated
 public class GuildReadyListener extends ListenerAdapter {
 
   private final Set<Long> messagesIds = new HashSet<>();

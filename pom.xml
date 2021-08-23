@@ -1,8 +1,6 @@
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.arthurfiorette</groupId>
@@ -24,6 +22,13 @@
 			<name>m2-dv8tion</name>
 			<url>https://m2.dv8tion.net/releases</url>
 		</repository>
+
+		<!-- JDA Utilities -->
+		<repository>
+			<id>central</id>
+			<name>bintray</name>
+			<url>http://jcenter.bintray.com</url>
+		</repository>
 	</repositories>
 
 
@@ -33,6 +38,14 @@
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
 			<version>4.3.0_309</version>
+		</dependency>
+
+		<!-- JDA Utilities -->
+		<dependency>
+			<groupId>com.jagrosh</groupId>
+			<artifactId>jda-utilities</artifactId>
+			<version>3.0.5</version>
+			<type>pom</type>
 		</dependency>
 
 		<!-- Guava -->
@@ -49,13 +62,13 @@
 			<version>1.18.20</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Logback -->
 		<dependency>
-  <groupId>ch.qos.logback</groupId>
-  <artifactId>logback-classic</artifactId>
-  <version>1.2.3</version>
-</dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -73,7 +86,8 @@
 				<version>3.2.4</version>
 				<configuration>
 					<transformers>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<mainClass>com.github.arthurfiorette.gameroom.Main</mainClass>
 						</transformer>
 					</transformers>

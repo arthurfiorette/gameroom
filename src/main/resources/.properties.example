@@ -1,2 +1,4 @@
 # Discord auth
 auth.token=
+# Define as -1 to choose automatically
+shard.count=
