@@ -1,8 +1,4 @@
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.arthurfiorette</groupId>
@@ -27,11 +23,12 @@
 			<url>https://m2.dv8tion.net/releases</url>
 		</repository>
 
-		<!-- JDA Utilities -->
+		<!-- JDA Utilities (from jitpack) -->
+		<!-- See https://github.com/JDA-Applications/JDA-Utilities/issues/127 -->
 		<repository>
-			<id>central</id>
-			<name>bintray</name>
-			<url>https://jcenter.bintray.com</url>
+			<id>jitpack.io</id>
+			<name>jitpack.io</name>
+			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 
@@ -43,12 +40,12 @@
 			<version>4.3.0_310</version>
 		</dependency>
 
-		<!-- JDA Utilities -->
+		<!-- JDA Utilities (from jitpack) -->
+		<!-- See https://github.com/JDA-Applications/JDA-Utilities/issues/127 -->
 		<dependency>
-			<groupId>com.jagrosh</groupId>
-			<artifactId>jda-utilities</artifactId>
-			<version>3.0.5</version>
-			<type>pom</type>
+			<groupId>com.github.JDA-Applications</groupId>
+			<artifactId>JDA-Utilities</artifactId>
+			<version>6069f9d</version>
 		</dependency>
 
 		<!-- Guava -->
