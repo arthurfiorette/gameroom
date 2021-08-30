@@ -66,7 +66,7 @@ public class GuildListener {
       .complete();
 
     room.setTextChannelId(textChannel.getIdLong());
-    room.setTextChannelId(voiceChannel.getIdLong());
+    room.setVoiceChannelId(voiceChannel.getIdLong());
 
     // Add the room to the list
     final Datastore datastore = shard.getGameroom().getDatastore();
