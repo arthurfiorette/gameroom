@@ -1,56 +1,46 @@
 package com.github.arthurfiorette.gameroom.shard;
 
 import com.github.arthurfiorette.gameroom.Gameroom;
+import com.github.arthurfiorette.gameroom.listeners.GuildReadyListener;
 import com.google.common.collect.ImmutableList;
-import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
-import java.util.Collection;
 import java.util.Objects;
-import java.util.function.IntFunction;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Category;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.events.ReadyEvent;
-import net.dv8tion.jda.api.hooks.AnnotatedEventManager;
-import net.dv8tion.jda.api.hooks.IEventManager;
 import net.dv8tion.jda.api.hooks.SubscribeEvent;
-import net.dv8tion.jda.internal.utils.JDALogger;
-import org.slf4j.Logger;
+import net.dv8tion.jda.api.requests.RestAction;
 
+@Slf4j
+@Getter
 @RequiredArgsConstructor
 public class ShardInstance {
 
-  private static final Logger log = JDALogger.getLog(ShardInstance.class);
-
-  @Getter
   private final int id;
 
-  @Getter
-  @NonNull
   private final Gameroom gameroom;
 
-  @Getter
-  private final IEventManager eventManager = new AnnotatedEventManager();
-
-  @Getter
   private final ImmutableList<Object> shardListeners = ImmutableList.of();
 
-  @Getter
-  private final EventWaiter eventWaiter = new EventWaiter();
-
-  @Getter
   @Setter(value = AccessLevel.PACKAGE)
   private JDA nullableJda;
+
+  private final GuildReadyListener readyListener = new GuildReadyListener(this);
 
   public JDA getJda() {
     return Objects.requireNonNull(nullableJda, "Shard is not ready yet");
   }
 
   public boolean hasStarted() {
-    return this.nullableJda != null;
+    return nullableJda != null;
   }
 
   @SubscribeEvent
@@ -59,23 +49,35 @@ public class ShardInstance {
     setNullableJda(jda);
 
     jda.getPresence().setActivity(Activity.playing("Shard Id: " + id));
-    log.info("Shard {} is ready", id);
+    ShardInstance.log.info("Shard {} is ready", id);
+
+    // Delete all channels (TEST ONLY)
+    // deleteGamerooms(jda.getGuilds().get(0));
   }
 
-  /**
-   * Generate a int function list for every shard id needed.
-   */
-  public static Collection<IntFunction<Object>> getJdaListeners(
-    IntFunction<ShardInstance> generator
-  ) {
-    return ImmutableList.of(
-      // shard instance itself
-      generator::apply,
-      id -> generator.apply(id).getEventWaiter()
-    );
-  }
+  void deleteGamerooms(final Guild guild) {
+    RestAction<Void> action = null;
 
-  public static IEventManager getEventManager(int shardId) {
-    return new AnnotatedEventManager();
+    for (final Category cat : guild.getCategories()) {
+      if (action != null) {
+        action = action.and(cat.delete());
+        continue;
+      }
+
+      action = cat.delete();
+    }
+
+    for (final GuildChannel channel : guild.getChannels()) {
+      if (action != null) {
+        action = action.and(channel.delete());
+        continue;
+      }
+
+      action = channel.delete();
+    }
+
+    if (action != null) {
+      action.complete();
+    }
   }
 }

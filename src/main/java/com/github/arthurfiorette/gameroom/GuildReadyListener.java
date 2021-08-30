@@ -23,20 +23,22 @@ public class GuildReadyListener extends ListenerAdapter {
   private final Set<Long> messagesIds = new HashSet<>();
 
   @Override
-  public void onGuildReady(GuildReadyEvent event) {
+  public void onGuildReady(final GuildReadyEvent event) {
     // Delete all others categories name gamerooms
-    Guild guild = event.getGuild();
+    final Guild guild = event.getGuild();
     deleteGamerooms(guild);
 
     // Create the category
-    CompletableFuture<Category> action = guild.createCategory("gamerooms").submit();
+    final CompletableFuture<Category> action = guild.createCategory("gamerooms").submit();
 
     action.thenAcceptAsync(
       category -> {
-        TextChannel text = category.createTextChannel("gameroom").complete();
+        final TextChannel text = category.createTextChannel("gameroom").complete();
 
         // Send the message to the text channel
-        Message msg = text.sendMessage("Reaja com qualquer emoji para criar o seu").complete();
+        final Message msg = text
+          .sendMessage("Reaja com qualquer emoji para criar o seu")
+          .complete();
         msg.addReaction("U+1F4A2").queue();
         messagesIds.add(msg.getIdLong());
       }
@@ -44,23 +46,23 @@ public class GuildReadyListener extends ListenerAdapter {
   }
 
   @Override
-  public void onMessageReactionAdd(MessageReactionAddEvent event) {
-    long id = event.getMessageIdLong();
-    User user = event.getUser();
+  public void onMessageReactionAdd(final MessageReactionAddEvent event) {
+    final long id = event.getMessageIdLong();
+    final User user = event.getUser();
 
     if (!messagesIds.contains(id) || user.isBot()) {
       return;
     }
 
-    CompletableFuture<Void> action = event.getReaction().removeReaction(user).submit();
+    final CompletableFuture<Void> action = event.getReaction().removeReaction(user).submit();
 
     action.thenRunAsync(
       () -> {
-        Member member = event.getMember();
-        Guild guild = event.getGuild();
+        final Member member = event.getMember();
+        final Guild guild = event.getGuild();
 
-        Category cat = event.getTextChannel().getParent();
-        TextChannel ch = cat
+        final Category cat = event.getTextChannel().getParent();
+        final TextChannel ch = cat
           .createTextChannel("gameroom-" + user.getName())
           .addPermissionOverride(member, EnumSet.of(Permission.VIEW_CHANNEL), null)
           .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
@@ -76,10 +78,10 @@ public class GuildReadyListener extends ListenerAdapter {
     );
   }
 
-  private void deleteGamerooms(Guild guild) {
+  private void deleteGamerooms(final Guild guild) {
     RestAction<Void> action = null;
 
-    for (GuildChannel channel : guild.getChannels()) {
+    for (final GuildChannel channel : guild.getChannels()) {
       if (channel.getName().startsWith("gameroom")) {
         if (action != null) {
           action = action.and(channel.delete());

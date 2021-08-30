@@ -1,10 +1,13 @@
 package com.github.arthurfiorette.gameroom.shard;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import com.github.arthurfiorette.gameroom.Gameroom;
 import com.github.arthurfiorette.gameroom.config.BotConfig;
 import com.github.arthurfiorette.gameroom.config.Property;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import com.github.arthurfiorette.gameroom.util.AsyncAnnotatedEventManager;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,40 +22,32 @@ public class ShardFactory {
   private final Gameroom gameroom;
 
   @Getter
-  private ConcurrentMap<Integer, ShardInstance> shards = new ConcurrentHashMap<>();
-
-  public ShardInstance getOrCreate(int id) {
-    return shards.computeIfAbsent(
-      id,
-      key -> {
-        System.out.println(key);
-
-        return create(key);
-      }
-    );
-  }
-
-  public ShardInstance getOf(@NonNull final JDA jda) {
-    return shards.get(jda.getShardInfo().getShardId());
-  }
+  private final ConcurrentMap<Integer, ShardInstance> shards = new ConcurrentHashMap<>();
 
   public DefaultShardManagerBuilder applyShardsConfig(
     @NonNull final BotConfig config,
     @NonNull final DefaultShardManagerBuilder builder
   ) {
     // Per instance event manager
-    builder.setEventManagerProvider(id -> getOrCreate(id).getEventManager());
-    builder.addEventListenerProviders(ShardInstance.getJdaListeners(this::getOrCreate));
-    builder.setShardsTotal(config.getInt(Property.SHARD_COUNT));
+    builder.setEventManagerProvider(id -> new AsyncAnnotatedEventManager());
+    builder.addEventListenerProviders(ShardingUtils.getJdaListeners(this::getOrCreate));
+    builder.setShardsTotal(config.getInt(Property.SHARD_COUNT, -1));
 
     return builder;
   }
 
-  private ShardInstance create(int id) {
-    ShardInstance instance = new ShardInstance(id, gameroom);
+  public ShardInstance getOrCreate(final int id) {
+    return shards.computeIfAbsent(
+      id,
+      key -> {
+        final ShardInstance instance = new ShardInstance(id, gameroom);
+        instance.getShardListeners().forEach(gameroom.getEventBus()::register);
+        return instance;
+      }
+    );
+  }
 
-    instance.getShardListeners().forEach(gameroom.getEventBus()::register);
-
-    return instance;
+  public ShardInstance getOf(@NonNull final JDA jda) {
+    return shards.get(jda.getShardInfo().getShardId());
   }
 }

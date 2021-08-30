@@ -30,23 +30,27 @@ public class BotConfig {
     properties.load(stream);
   }
 
-  public String get(@NonNull Property prop) {
-    return this.properties.getProperty(prop.getPath());
+  public String get(@NonNull final Property prop) {
+    return properties.getProperty(prop.getPath());
   }
 
-  public String get(@NonNull Property prop, String def) {
-    return this.properties.getProperty(prop.getPath(), def);
+  public String get(@NonNull final Property prop, final String def) {
+    return properties.getProperty(prop.getPath(), def);
   }
 
-  public boolean has(@NonNull Property prop) {
-    return this.properties.contains(prop.getPath());
+  public boolean has(@NonNull final Property prop) {
+    return properties.contains(prop.getPath());
   }
 
-  public int getInt(@NonNull Property prop) {
+  public int getInt(@NonNull final Property prop) {
     return Integer.parseInt(get(prop));
   }
 
-  public boolean getBoolean(@NonNull Property prop) {
+  public int getInt(@NonNull final Property prop, final int def) {
+    return Integer.parseInt(get(prop, def + ""));
+  }
+
+  public boolean getBoolean(@NonNull final Property prop) {
     return Boolean.parseBoolean(get(prop));
   }
 }

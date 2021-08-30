@@ -1,29 +1,39 @@
 package com.github.arthurfiorette.gameroom;
 
-import com.github.arthurfiorette.gameroom.config.BotConfig;
-import com.github.arthurfiorette.gameroom.config.Property;
-import com.github.arthurfiorette.gameroom.shard.ShardFactory;
-import com.google.common.eventbus.EventBus;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
+
 import javax.security.auth.login.LoginException;
+
+import com.github.arthurfiorette.gameroom.config.BotConfig;
+import com.github.arthurfiorette.gameroom.config.MongoManager;
+import com.github.arthurfiorette.gameroom.config.Property;
+import com.github.arthurfiorette.gameroom.shard.ShardFactory;
+import com.google.common.eventbus.EventBus;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import dev.morphia.Datastore;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RequiredArgsConstructor
 public class Gameroom {
 
   private static final Logger log = LoggerFactory.getLogger(Gameroom.class);
+
+  public static final Color MAIN_COLOR = new Color(0xF1443F);
 
   @Getter
   @NonNull
@@ -33,18 +43,27 @@ public class Gameroom {
   private final ShardFactory shardFactory = new ShardFactory(this);
 
   @Getter
+  private final MongoManager mongoManager = new MongoManager(this);
+
+  @Getter
   private ShardManager shardManager;
 
   @Getter
   // To communicate between shards
-  private EventBus eventBus = new EventBus();
+  private final EventBus eventBus = new EventBus();
 
-  void start() throws LoginException, IllegalArgumentException {
-    log.info("Creating JDA Instance");
+  @SneakyThrows(LoginException.class)
+  public void prepareJda() throws IllegalArgumentException {
+    log.info("Setting up JDA");
     log.info(
       "Using intents {}",
       gatewayIntents().stream().map(Enum::name).collect(Collectors.joining(", "))
     );
+    log.info(
+      "Disabling cache for {}",
+      disableCacheFlags().stream().map(Enum::name).collect(Collectors.joining(", "))
+    );
+    log.info("Using {} shards", config.getInt(Property.SHARD_COUNT, -1));
 
     final DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.create(
       config.get(Property.AUTH_TOKEN),
@@ -57,11 +76,19 @@ public class Gameroom {
     builder.setAutoReconnect(true);
 
     shardFactory.applyShardsConfig(config, builder);
-    log.info("Using {} shards", config.getInt(Property.SHARD_COUNT));
-    System.exit(0);
-    shardManager = builder.build();
 
-    log.info("JDA is ready...");
+    log.info("JDA is ready to start.");
+
+    shardManager = builder.build(false);
+  }
+
+  public void prepareDb() {
+    mongoManager.createClient();
+  }
+
+  public void start() throws LoginException {
+    mongoManager.connect();
+    shardManager.login();
   }
 
   private Collection<GatewayIntent> gatewayIntents() {
@@ -84,5 +111,9 @@ public class Gameroom {
       CacheFlag.ROLE_TAGS,
       CacheFlag.ONLINE_STATUS
     );
+  }
+
+  public Datastore getDatastore() {
+    return this.getMongoManager().getDatastore();
   }
 }
