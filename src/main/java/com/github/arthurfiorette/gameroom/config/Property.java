@@ -12,8 +12,7 @@ public enum Property {
   SHARD_COUNT("shard.count"),
   MONGO_CONNECTION("mongodb.connection-string"),
   MONGO_DATABASE("mongodb.database-name"),
-  CUSTOMIZATION_CATEGORY_NAME("customization.category.name"),
-  ;
+  CUSTOMIZATION_CATEGORY_NAME("customization.category.name");
 
   @Getter
   @NonNull

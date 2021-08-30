@@ -1,13 +1,11 @@
 package com.github.arthurfiorette.gameroom.shard;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import com.github.arthurfiorette.gameroom.Gameroom;
 import com.github.arthurfiorette.gameroom.config.BotConfig;
 import com.github.arthurfiorette.gameroom.config.Property;
 import com.github.arthurfiorette.gameroom.util.AsyncAnnotatedEventManager;
-
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

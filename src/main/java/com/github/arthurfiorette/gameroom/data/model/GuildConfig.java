@@ -1,17 +1,15 @@
 package com.github.arthurfiorette.gameroom.data.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.types.ObjectId;
-
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Property;
 import dev.morphia.annotations.Reference;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
+import org.bson.types.ObjectId;
 
 @Data
 @Entity
@@ -23,7 +21,7 @@ public class GuildConfig {
   private ObjectId id;
 
   @Property
-  private  long guildId;
+  private long guildId;
 
   @Property
   private long categoryId;

@@ -50,7 +50,6 @@ public class ShardInstance {
 
     jda.getPresence().setActivity(Activity.playing("Shard Id: " + id));
     ShardInstance.log.info("Shard {} is ready", id);
-
     // Delete all channels (TEST ONLY)
     // deleteGamerooms(jda.getGuilds().get(0));
   }

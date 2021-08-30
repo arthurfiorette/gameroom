@@ -1,15 +1,13 @@
 package com.github.arthurfiorette.gameroom.data.model;
 
-import java.time.Instant;
-
-import org.bson.types.ObjectId;
-
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Property;
 import dev.morphia.annotations.Reference;
+import java.time.Instant;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 @Data
 @Entity

@@ -1,10 +1,8 @@
 package com.github.arthurfiorette.gameroom.shard;
 
+import com.google.common.collect.ImmutableList;
 import java.util.Collection;
 import java.util.function.IntFunction;
-
-import com.google.common.collect.ImmutableList;
-
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

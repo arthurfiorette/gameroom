@@ -5,7 +5,6 @@ import com.github.arthurfiorette.gameroom.data.model.GuildConfig;
 import com.mongodb.ConnectionString;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import lombok.Getter;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class MongoManager {
-
 
   @Getter
   @NonNull

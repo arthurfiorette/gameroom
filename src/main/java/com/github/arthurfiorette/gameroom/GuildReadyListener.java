@@ -31,18 +31,14 @@ public class GuildReadyListener extends ListenerAdapter {
     // Create the category
     final CompletableFuture<Category> action = guild.createCategory("gamerooms").submit();
 
-    action.thenAcceptAsync(
-      category -> {
-        final TextChannel text = category.createTextChannel("gameroom").complete();
+    action.thenAcceptAsync(category -> {
+      final TextChannel text = category.createTextChannel("gameroom").complete();
 
-        // Send the message to the text channel
-        final Message msg = text
-          .sendMessage("Reaja com qualquer emoji para criar o seu")
-          .complete();
-        msg.addReaction("U+1F4A2").queue();
-        messagesIds.add(msg.getIdLong());
-      }
-    );
+      // Send the message to the text channel
+      final Message msg = text.sendMessage("Reaja com qualquer emoji para criar o seu").complete();
+      msg.addReaction("U+1F4A2").queue();
+      messagesIds.add(msg.getIdLong());
+    });
   }
 
   @Override
@@ -56,26 +52,24 @@ public class GuildReadyListener extends ListenerAdapter {
 
     final CompletableFuture<Void> action = event.getReaction().removeReaction(user).submit();
 
-    action.thenRunAsync(
-      () -> {
-        final Member member = event.getMember();
-        final Guild guild = event.getGuild();
+    action.thenRunAsync(() -> {
+      final Member member = event.getMember();
+      final Guild guild = event.getGuild();
 
-        final Category cat = event.getTextChannel().getParent();
-        final TextChannel ch = cat
-          .createTextChannel("gameroom-" + user.getName())
-          .addPermissionOverride(member, EnumSet.of(Permission.VIEW_CHANNEL), null)
-          .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
-          .complete();
-        ch.sendMessage(member.getAsMention()).complete();
+      final Category cat = event.getTextChannel().getParent();
+      final TextChannel ch = cat
+        .createTextChannel("gameroom-" + user.getName())
+        .addPermissionOverride(member, EnumSet.of(Permission.VIEW_CHANNEL), null)
+        .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
+        .complete();
+      ch.sendMessage(member.getAsMention()).complete();
 
-        cat
-          .createVoiceChannel("gameroom-" + user.getName())
-          .addPermissionOverride(member, EnumSet.of(Permission.VIEW_CHANNEL), null)
-          .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
-          .complete();
-      }
-    );
+      cat
+        .createVoiceChannel("gameroom-" + user.getName())
+        .addPermissionOverride(member, EnumSet.of(Permission.VIEW_CHANNEL), null)
+        .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
+        .complete();
+    });
   }
 
   private void deleteGamerooms(final Guild guild) {

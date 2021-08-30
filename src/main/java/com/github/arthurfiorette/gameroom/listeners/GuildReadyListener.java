@@ -4,7 +4,6 @@ import com.github.arthurfiorette.gameroom.config.BotConfig;
 import com.github.arthurfiorette.gameroom.config.Property;
 import com.github.arthurfiorette.gameroom.data.model.GuildConfig;
 import com.github.arthurfiorette.gameroom.shard.ShardInstance;
-
 import dev.morphia.Datastore;
 import dev.morphia.query.experimental.filters.Filters;
 import lombok.Getter;
@@ -48,9 +47,9 @@ public class GuildReadyListener {
     final GuildConfig config = new GuildConfig(guild.getIdLong());
     final Datastore datastore = shard.getGameroom().getDatastore();
     final BotConfig botConfig = shard.getGameroom().getConfig();
-    
+
     log.info("Configuring guild {}.", guild.getId());
-    
+
     final String name = botConfig.get(Property.CUSTOMIZATION_CATEGORY_NAME);
     final Category category = guild.createCategory(name).complete();
     final TextChannel text = category.createTextChannel("gameroom").complete();

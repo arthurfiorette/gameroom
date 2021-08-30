@@ -1,22 +1,16 @@
 package com.github.arthurfiorette.gameroom;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.stream.Collectors;
-
-import javax.security.auth.login.LoginException;
-
 import com.github.arthurfiorette.gameroom.config.BotConfig;
 import com.github.arthurfiorette.gameroom.config.MongoManager;
 import com.github.arthurfiorette.gameroom.config.Property;
 import com.github.arthurfiorette.gameroom.shard.ShardFactory;
 import com.google.common.eventbus.EventBus;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import dev.morphia.Datastore;
+import java.awt.Color;
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.stream.Collectors;
+import javax.security.auth.login.LoginException;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +21,8 @@ import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RequiredArgsConstructor
 public class Gameroom {

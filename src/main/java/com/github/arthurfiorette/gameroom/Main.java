@@ -1,9 +1,7 @@
 package com.github.arthurfiorette.gameroom;
 
-import javax.security.auth.login.LoginException;
-
 import com.github.arthurfiorette.gameroom.config.BotConfig;
-
+import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDA;
 
 public class Main {
