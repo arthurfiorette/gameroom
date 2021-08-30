@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
-			<version>4.3.0_309</version>
+			<version>4.3.0_310</version>
 		</dependency>
 
 		<!-- JDA Utilities -->
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.2.3</version>
+			<version>1.2.5</version>
 		</dependency>
 
 		<!-- Morphia -->
