@@ -20,4 +20,16 @@ impl EventHandler for Listener {
   async fn resume(&self, _: Context, _: ResumedEvent) {
     println!("Resumed");
   }
+
+  async fn message(&self, _: Context, msg: Message) {
+    if msg.author.bot {
+      return;
+    }
+
+    if msg.content == "!ASD" {
+      println!("ASD: {}", msg.content);
+    } else {
+      println!("Message received: '{}'", msg.content);
+    }
+  }
 }

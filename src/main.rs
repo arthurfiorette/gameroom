@@ -1,7 +1,17 @@
-use serenity::{framework::StandardFramework, Client};
+use serenity::client::bridge::gateway::{GatewayIntents, ShardManager};
+use serenity::prelude::*;
 use std::env;
+use std::sync::Arc;
 
+mod commands;
+mod framework;
 mod listener;
+mod utils;
+
+struct ShardManagerContainer;
+impl TypeMapKey for ShardManagerContainer {
+  type Value = Arc<Mutex<ShardManager>>;
+}
 
 #[tokio::main]
 async fn main() {
@@ -9,14 +19,20 @@ async fn main() {
   dotenv::dotenv().expect("Failed to load .env file");
 
   let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
-
-  let framework = StandardFramework::new().configure(|c| c.prefix("$"));
+  let http_client = utils::create_http_client(&token);
+  let framework = framework::create_framework(&http_client).await;
 
   let mut client = Client::builder(token)
     .event_handler(listener::Listener)
     .framework(framework)
+    .intents(GatewayIntents::all())
     .await
     .expect("Error while creating discord client");
+
+  {
+    let mut data = client.data.write().await;
+    data.insert::<ShardManagerContainer>(Arc::clone(&client.shard_manager));
+  }
 
   if let Err(err) = client.start().await {
     println!("An error occurred: {:?}", err);
