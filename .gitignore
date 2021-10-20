@@ -4,3 +4,6 @@
 # Vscode
 .vscode/*
 !.vscode/launch.json
+
+# Secrets
+/.env
