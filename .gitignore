@@ -1,7 +1,6 @@
-/.metadata
+# Rust
 /target
-/.settings
-/.classpath
-/.project
-/.vscode
-/.factorypath
+
+# Vscode
+.vscode/*
+!.vscode/launch.json
