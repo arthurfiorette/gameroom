@@ -11,12 +11,12 @@ pub async fn create_framework(http_client: &Http) -> StandardFramework {
   let (owners, bot_id) = utils::get_owners_and_bot_id(http_client).await;
 
   StandardFramework::new()
-    .configure(|c| 
+    .configure(|c| {
       c.with_whitespace(true)
         .on_mention(Some(bot_id))
         .owners(owners)
         .prefix("!")
-    )
+    })
     // .before(before_handler)
     .after(after_handler)
     .on_dispatch_error(dispatch_error)
