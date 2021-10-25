@@ -1,0 +1,9 @@
+# White list approach
+
+*
+
+!src/
+!.env
+
+!Cargo.lock
+!Cargo.toml

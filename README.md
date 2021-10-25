@@ -51,3 +51,32 @@
 #### `GameRoom` is a discord bot in java to create amazing short term rooms in discord
 
 <br />
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Requirements](#requirements)
+- [Running](#running)
+  - [Docker](#docker)
+
+<br />
+
+## Requirements
+
+- Docker
+
+## Running
+
+### Docker
+
+> Until this project isn't ready, we won't publish it to docker hub.
+
+```sh
+git clone https://github.com/ArthurFiorette/gameroom.git
+
+# Build docker image
+docker build -t gameroom .
+
+# Run
+docker run gameroom
+```
