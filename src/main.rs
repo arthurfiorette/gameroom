@@ -16,7 +16,12 @@ impl TypeMapKey for ShardManagerContainer {
 #[tokio::main]
 async fn main() {
   // Load .env file
-  dotenv::dotenv().expect("Failed to load .env file");
+  if let Err(why) = dotenv::dotenv() {
+    println!(
+      "Could not load .env file: {}.\nYou'll probably find more errors",
+      why
+    );
+  };
 
   let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
   let http_client = utils::create_http_client(&token);
