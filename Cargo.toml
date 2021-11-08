@@ -8,4 +8,4 @@ edition = "2018"
 [dependencies]
 dotenv = "0.15"
 serenity = { version="0.10.9", features = ["client", "gateway", "rustls_backend", "model"] }
-tokio = { version = "1.0", features = ["macros", "signal","rt-multi-thread"] }
+tokio = { version = "1.13", features = ["macros", "signal","rt-multi-thread"] }
